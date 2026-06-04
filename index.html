@@ -274,6 +274,7 @@
     #rsvp { background: var(--cream); max-width: 100%; }
     #rsvp > * { max-width: 680px; margin-left: auto; margin-right: auto; }
     #rsvp .section-title, #rsvp .section-label { max-width: 680px; margin-left: auto; margin-right: auto; }
+    #rsvp iframe { display: block; margin: 0 auto; }
 
     .rsvp-intro {
       font-family: 'Cormorant Garamond', serif;
@@ -627,82 +628,8 @@
   <h2 class="section-title reveal">RSVP</h2>
   <p class="rsvp-intro reveal">Per favore rispondi entro il <strong>30/06/2026</strong>.<br>Non vediamo l'ora di festeggiare con te!</p>
 
-  <div class="form-error reveal" id="formError">
-    Si è verificato un errore nell'invio. Riprova o contattaci via email.
-  </div>
-
-  <form class="rsvp-form reveal" id="rsvpForm" novalidate>
-
-    <input class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1">
-
-    <div class="form-row">
-      <div class="field">
-        <label for="nome">Nome *</label>
-        <input type="text" id="nome" name="nome" placeholder="Marco" required>
-      </div>
-      <div class="field">
-        <label for="cognome">Cognome *</label>
-        <input type="text" id="cognome" name="cognome" placeholder="Rossi" required>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="email">Email *</label>
-      <input type="email" id="email" name="email" placeholder="marco.rossi@email.com" required>
-    </div>
-
-    <div class="field">
-      <label>Sarai presente? *</label>
-      <div class="radio-group">
-        <label><input type="radio" name="presenza" value="Sì, ci sarò!" required> Sì, ci sarò!</label>
-        <label><input type="radio" name="presenza" value="Purtroppo non posso"> Purtroppo non posso</label>
-      </div>
-    </div>
-
-    <div id="attendeeDetails" class="hidden">
-      <div class="field">
-        <label for="accompagnatori">Numero di accompagnatori</label>
-        <select id="accompagnatori" name="accompagnatori">
-          <option value="Solo io">Solo io</option>
-          <option value="+1">+1 persona</option>
-          <option value="+2">+2 persone</option>
-          <option value="+3">+3 persone</option>
-          <option value="+4 o più">+4 o più persone</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Intolleranze o allergie alimentari</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="int_glutine" value="Celiachia / Senza glutine"> 🌾 Celiachia / Senza glutine</label>
-          <label><input type="checkbox" name="int_lattosio" value="Intolleranza al lattosio"> 🥛 Intolleranza al lattosio</label>
-          <label><input type="checkbox" name="int_vegetariano" value="Vegetariano"> 🥦 Vegetariano</label>
-          <label><input type="checkbox" name="int_vegano" value="Vegano"> 🌱 Vegano</label>
-          <label><input type="checkbox" name="int_fruttamare" value="Allergia frutti di mare"> 🦐 Allergia frutti di mare</label>
-          <label><input type="checkbox" name="int_fruttasecca" value="Allergia frutta secca"> 🥜 Allergia frutta secca</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="intolleranza_altro">Altre intolleranze o note alimentari</label>
-        <input type="text" id="intolleranza_altro" name="intolleranza_altro" placeholder="Es: senza uova, diabetico…">
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="messaggio">Un messaggio per gli sposi</label>
-      <textarea id="messaggio" name="messaggio" placeholder="Scrivi un pensiero, un augurio…"></textarea>
-    </div>
-
-    <button type="submit" class="btn-submit" id="submitBtn">Conferma la presenza</button>
-
-  </form>
-
-  <div class="form-success" id="formSuccess">
-    <div class="check">✦</div>
-    <h3>Grazie mille!</h3>
-    <p>Abbiamo ricevuto la tua conferma.<br>Non vediamo l'ora di festeggiare con te!</p>
-  </div>
+  <iframe data-tally-src="https://tally.so/embed/obzEee?hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="284" frameborder="0" marginheight="0" marginwidth="0" title="RSVP"></iframe>
+  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 </section>
 
 <!-- FOOTER -->
@@ -742,76 +669,6 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ── PRESENZA TOGGLE ── */
-  document.querySelectorAll('input[name="presenza"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-      const extra = document.getElementById('attendeeDetails');
-      extra.classList.toggle('hidden', this.value !== 'Sì, ci sarò!');
-    });
-  });
-
-  /* ── RSVP – Tally API ── */
-  document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const btn  = document.getElementById('submitBtn');
-    const errEl = document.getElementById('formError');
-    errEl.style.display = 'none';
-    btn.disabled = true;
-    btn.textContent = 'Invio in corso…';
-
-    const fd = new FormData(form);
-
-    if (fd.get('website')) {
-      form.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-      return;
-    }
-
-    const intolleranze = [
-      fd.get('int_glutine'), fd.get('int_lattosio'), fd.get('int_vegetariano'),
-      fd.get('int_vegano'), fd.get('int_fruttamare'), fd.get('int_fruttasecca')
-    ].filter(Boolean).join(', ');
-
-    const pasti = [
-      fd.get('pasto_aperitivo'), fd.get('pasto_cena')
-    ].filter(Boolean).join(', ');
-
-    const payload = {
-      fields: [
-        { key: 'nome',               value: fd.get('nome') || '' },
-        { key: 'cognome',            value: fd.get('cognome') || '' },
-        { key: 'email',              value: fd.get('email') || '' },
-        { key: 'presenza',           value: fd.get('presenza') || '' },
-        { key: 'accompagnatori',     value: fd.get('accompagnatori') || '' },
-        { key: 'pasti',              value: pasti },
-        { key: 'intolleranze',       value: intolleranze },
-        { key: 'intolleranza_altro', value: fd.get('intolleranza_altro') || '' },
-        { key: 'trasporto',          value: fd.get('trasporto') || '' },
-        { key: 'messaggio',          value: fd.get('messaggio') || '' },
-      ]
-    };
-
-    try {
-      const res = await fetch('https://api.tally.so/r/obzEee', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer tly-NpmjyUNy0FlhhoDLsux6XyE8MrS523dQ' },
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
-        form.style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-      } else {
-        throw new Error('HTTP ' + res.status);
-      }
-    } catch (err) {
-      console.error(err);
-      errEl.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Conferma la presenza';
-    }
-  });
 </script>
 
 </body>
