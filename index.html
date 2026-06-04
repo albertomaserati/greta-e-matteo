@@ -289,9 +289,9 @@
       max-width: 680px;
       margin: 0 auto;
       display: grid;
-      gap: 1.4rem;
+      gap: 1.6rem;
     }
-    .form-row { display: grid; gap: 1.4rem; grid-template-columns: 1fr 1fr; }
+    .form-row { display: grid; gap: 1.6rem; grid-template-columns: 1fr 1fr; }
     @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
 
     .field { display: flex; flex-direction: column; gap: .5rem; }
@@ -305,6 +305,7 @@
     .field select,
     .field textarea {
       border: 1px solid var(--border);
+      border-radius: 0;
       background: var(--ivory);
       padding: .75rem 1rem;
       font-family: 'Jost', sans-serif;
@@ -312,34 +313,93 @@
       font-weight: 300;
       color: var(--ink);
       outline: none;
-      transition: border-color .2s;
+      transition: border-color .2s, box-shadow .2s;
       -webkit-appearance: none;
+      appearance: none;
     }
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
       border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,151,90,.1);
     }
-    .field textarea { resize: vertical; min-height: 100px; }
+    .field textarea { resize: vertical; min-height: 110px; }
 
-    .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .radio-group label {
-      display: flex; align-items: center; gap: .5rem;
-      font-size: .85rem;
+    /* select arrow custom */
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b8975a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .radio-group, .checkbox-group {
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .radio-group label,
+    .checkbox-group label {
+      display: flex; align-items: center; gap: .7rem;
+      font-size: .88rem;
       letter-spacing: 0;
       text-transform: none;
       color: var(--ink);
       cursor: pointer;
     }
-    .radio-group input[type=radio] { accent-color: var(--gold); }
-
-    .checkbox-group { display: flex; flex-direction: column; gap: .5rem; }
-    .checkbox-group label {
-      display: flex; align-items: center; gap: .6rem;
-      font-size: .85rem; letter-spacing: 0; text-transform: none;
-      color: var(--ink); cursor: pointer;
+    .radio-group input[type=radio],
+    .checkbox-group input[type=checkbox] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: var(--ivory);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
     }
-    .checkbox-group input[type=checkbox] { accent-color: var(--gold); }
+    .radio-group input[type=radio]:checked,
+    .checkbox-group input[type=checkbox]:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .checkbox-group input[type=checkbox]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 5px; height: 9px;
+      border: 2px solid var(--ivory);
+      border-top: none; border-left: none;
+      transform: translate(-50%, -58%) rotate(45deg);
+    }
+    .radio-group input[type=radio]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 8px; height: 8px;
+      background: var(--ivory);
+      transform: translate(-50%, -50%);
+    }
+
+    #attendeeDetails {
+      display: contents;
+    }
+    #attendeeDetails.hidden {
+      display: none;
+    }
+
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .field-divider {
+      height: 1px;
+      background: var(--border);
+      margin: .4rem 0;
+    }
 
     .btn-submit {
       display: inline-block;
@@ -347,6 +407,7 @@
       background: var(--gold);
       color: var(--ivory);
       border: none;
+      border-radius: 0;
       font-family: 'Jost', sans-serif;
       font-size: .75rem;
       font-weight: 500;
@@ -354,24 +415,38 @@
       text-transform: uppercase;
       cursor: pointer;
       transition: background .25s, transform .15s;
-      margin-top: .5rem;
       justify-self: start;
     }
     .btn-submit:hover { background: var(--gold-dk); transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
     .form-success {
       display: none;
       text-align: center;
-      padding: 2rem;
+      padding: 3rem 2rem;
       border: 1px solid var(--border);
       background: var(--ivory);
+      max-width: 680px;
+      margin: 0 auto;
     }
-    .form-success .check { font-size: 2rem; color: var(--gold); margin-bottom: .5rem; }
+    .form-success .check {
+      font-size: 2rem; color: var(--gold); margin-bottom: .8rem;
+    }
     .form-success h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 300;
-      margin-bottom: .5rem;
+      font-size: 1.8rem; font-weight: 300; margin-bottom: .5rem;
+    }
+    .form-success p { color: var(--ink-lt); font-size: .95rem; }
+
+    .form-error {
+      display: none;
+      padding: .8rem 1rem;
+      border: 1px solid rgba(180,60,60,.3);
+      background: rgba(180,60,60,.05);
+      color: #a03030;
+      font-size: .85rem;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     /* ── FOOTER ── */
@@ -552,10 +627,15 @@
   <h2 class="section-title reveal">RSVP</h2>
   <p class="rsvp-intro reveal">Per favore rispondi entro il <strong>30/06/2026</strong>.<br>Non vediamo l'ora di festeggiare con te!</p>
 
-  <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+  <div class="form-error reveal" id="formError">
+    Si è verificato un errore nell'invio. Riprova o contattaci via email.
+  </div>
 
-    <!-- Nome -->
-    <div class="form-row reveal">
+  <form class="rsvp-form reveal" id="rsvpForm" novalidate>
+
+    <input class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1">
+
+    <div class="form-row">
       <div class="field">
         <label for="nome">Nome *</label>
         <input type="text" id="nome" name="nome" placeholder="Marco" required>
@@ -566,76 +646,62 @@
       </div>
     </div>
 
-    <!-- Email -->
-    <div class="field reveal">
+    <div class="field">
       <label for="email">Email *</label>
       <input type="email" id="email" name="email" placeholder="marco.rossi@email.com" required>
     </div>
 
-    <!-- Presenza -->
-    <div class="field reveal">
+    <div class="field">
       <label>Sarai presente? *</label>
       <div class="radio-group">
-        <label><input type="radio" name="presenza" value="si" required> ✅ Sì, ci sarò!</label>
-        <label><input type="radio" name="presenza" value="no"> ❌ Purtroppo non posso</label>
+        <label><input type="radio" name="presenza" value="Sì, ci sarò!" required> Sì, ci sarò!</label>
+        <label><input type="radio" name="presenza" value="Purtroppo non posso"> Purtroppo non posso</label>
       </div>
     </div>
 
-    <!-- Accompagnatori -->
-    <div class="field reveal">
-      <label for="accompagnatori">Numero di accompagnatori</label>
-      <select id="accompagnatori" name="accompagnatori">
-        <option value="0">Solo io</option>
-        <option value="1">+1 persona</option>
-        <option value="2">+2 persone</option>
-        <option value="3">+3 persone</option>
-        <option value="4">+4 o più persone</option>
-      </select>
-    </div>
+    <div id="attendeeDetails" class="hidden">
+      <div class="field">
+        <label for="accompagnatori">Numero di accompagnatori</label>
+        <select id="accompagnatori" name="accompagnatori">
+          <option value="Solo io">Solo io</option>
+          <option value="+1">+1 persona</option>
+          <option value="+2">+2 persone</option>
+          <option value="+3">+3 persone</option>
+          <option value="+4 o più">+4 o più persone</option>
+        </select>
+      </div>
 
-    <!-- Intolleranze -->
-    <div class="field reveal">
-      <label>Intolleranze o allergie alimentari</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="intolleranze" value="glutine"> 🌾 Celiachia / Senza glutine</label>
-        <label><input type="checkbox" name="intolleranze" value="lattosio"> 🥛 Intolleranza al lattosio</label>
-        <label><input type="checkbox" name="intolleranze" value="vegetariano"> 🥦 Vegetariano</label>
-        <label><input type="checkbox" name="intolleranze" value="vegano"> 🌱 Vegano</label>
-        <label><input type="checkbox" name="intolleranze" value="fruttamare"> 🦐 Allergia frutti di mare</label>
-        <label><input type="checkbox" name="intolleranze" value="fruttasecca"> 🥜 Allergia frutta secca</label>
+      <div class="field">
+        <label>Intolleranze o allergie alimentari</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="int_glutine" value="Celiachia / Senza glutine"> 🌾 Celiachia / Senza glutine</label>
+          <label><input type="checkbox" name="int_lattosio" value="Intolleranza al lattosio"> 🥛 Intolleranza al lattosio</label>
+          <label><input type="checkbox" name="int_vegetariano" value="Vegetariano"> 🥦 Vegetariano</label>
+          <label><input type="checkbox" name="int_vegano" value="Vegano"> 🌱 Vegano</label>
+          <label><input type="checkbox" name="int_fruttamare" value="Allergia frutti di mare"> 🦐 Allergia frutti di mare</label>
+          <label><input type="checkbox" name="int_fruttasecca" value="Allergia frutta secca"> 🥜 Allergia frutta secca</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="intolleranza_altro">Altre intolleranze o note alimentari</label>
+        <input type="text" id="intolleranza_altro" name="intolleranza_altro" placeholder="Es: senza uova, diabetico…">
       </div>
     </div>
 
-    <!-- Intolleranza custom -->
-    <div class="field reveal">
-      <label for="intolleranza_altro">Altre intolleranze o note alimentari</label>
-      <input type="text" id="intolleranza_altro" name="intolleranza_altro" placeholder="Es: senza uova, diabetico…">
-    </div>
-
-    <!-- Trasporto -->
-    <div class="field reveal">
-      <label>Hai bisogno di un passaggio?</label>
-      <div class="radio-group">
-        <label><input type="radio" name="trasporto" value="no"> No, ho il mio mezzo</label>
-        <label><input type="radio" name="trasporto" value="si"> Sì, se possibile</label>
-        <label><input type="radio" name="trasporto" value="offro"> Posso dare passaggi</label>
-      </div>
-    </div>
-
-    <!-- Messaggio -->
-    <div class="field reveal">
+    <div class="field">
       <label for="messaggio">Un messaggio per gli sposi</label>
       <textarea id="messaggio" name="messaggio" placeholder="Scrivi un pensiero, un augurio…"></textarea>
     </div>
 
-    <button type="submit" class="btn-submit reveal">Conferma la presenza</button>
+    <button type="submit" class="btn-submit" id="submitBtn">Conferma la presenza</button>
+
   </form>
 
-  <!-- Successo -->
   <div class="form-success" id="formSuccess">
     <div class="check">✦</div>
     <h3>Grazie mille!</h3>
-    <p>Abbiamo ricevuto la tua conferma. Non vediamo l'ora di festeggiate con te!</p>
+    <p>Abbiamo ricevuto la tua conferma.<br>Non vediamo l'ora di festeggiare con te!</p>
   </div>
 </section>
 
@@ -676,18 +742,76 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  /* ── RSVP SUBMIT ── */
-  function submitRSVP(e) {
+  /* ── PRESENZA TOGGLE ── */
+  document.querySelectorAll('input[name="presenza"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const extra = document.getElementById('attendeeDetails');
+      extra.classList.toggle('hidden', this.value !== 'Sì, ci sarò!');
+    });
+  });
+
+  /* ── RSVP – Tally API ── */
+  document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const form = document.getElementById('rsvpForm');
-    const success = document.getElementById('formSuccess');
+    const form = e.target;
+    const btn  = document.getElementById('submitBtn');
+    const errEl = document.getElementById('formError');
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso…';
 
-    /* ── Qui puoi collegare un backend, Netlify Forms, Formspree ecc. ── */
-    /* Esempio Formspree: cambia l'action del form con il tuo endpoint    */
+    const fd = new FormData(form);
 
-    form.style.display = 'none';
-    success.style.display = 'block';
-  }
+    if (fd.get('website')) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      return;
+    }
+
+    const intolleranze = [
+      fd.get('int_glutine'), fd.get('int_lattosio'), fd.get('int_vegetariano'),
+      fd.get('int_vegano'), fd.get('int_fruttamare'), fd.get('int_fruttasecca')
+    ].filter(Boolean).join(', ');
+
+    const pasti = [
+      fd.get('pasto_aperitivo'), fd.get('pasto_cena')
+    ].filter(Boolean).join(', ');
+
+    const payload = {
+      fields: [
+        { key: 'nome',               value: fd.get('nome') || '' },
+        { key: 'cognome',            value: fd.get('cognome') || '' },
+        { key: 'email',              value: fd.get('email') || '' },
+        { key: 'presenza',           value: fd.get('presenza') || '' },
+        { key: 'accompagnatori',     value: fd.get('accompagnatori') || '' },
+        { key: 'pasti',              value: pasti },
+        { key: 'intolleranze',       value: intolleranze },
+        { key: 'intolleranza_altro', value: fd.get('intolleranza_altro') || '' },
+        { key: 'trasporto',          value: fd.get('trasporto') || '' },
+        { key: 'messaggio',          value: fd.get('messaggio') || '' },
+      ]
+    };
+
+    try {
+      const res = await fetch('https://api.tally.so/r/obzEee', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        throw new Error('HTTP ' + res.status);
+      }
+    } catch (err) {
+      console.error(err);
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Conferma la presenza';
+    }
+  });
 </script>
 
 </body>
