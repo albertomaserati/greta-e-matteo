@@ -6,6 +6,7 @@
   <title>Greta & Matteo — 05/09/2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcqFxwtAAAAAOTVrc2y6AcYPw9YjgNeunptMR8y"></script>
 
   <style>
     :root {
@@ -650,9 +651,85 @@
   <h2 class="section-title reveal">RSVP</h2>
   <p class="rsvp-intro reveal">Per favore rispondi entro il <strong>30/06/2026</strong>.<br>Non vediamo l'ora di festeggiare con te!</p>
 
-  <iframe data-tally-src="https://tally.so/embed/obzEee?hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="284" frameborder="0" marginheight="0" marginwidth="0" title="RSVP"></iframe>
-  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+  <div class="form-error reveal" id="formError">
+    Si è verificato un errore nell'invio. Riprova o contattaci via email.
+  </div>
+
+  <form class="rsvp-form reveal" id="rsvpForm" novalidate>
+
+    <input class="hp-field" type="text" name="website" autocomplete="off" tabindex="-1">
+
+    <div class="form-row">
+      <div class="field">
+        <label for="nome">Nome *</label>
+        <input type="text" id="nome" name="fi-sender-firstName" placeholder="Marco" required>
+      </div>
+      <div class="field">
+        <label for="cognome">Cognome *</label>
+        <input type="text" id="cognome" name="fi-sender-lastName" placeholder="Rossi" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="fi-sender-email" placeholder="marco.rossi@email.com" required>
+    </div>
+
+    <div class="field">
+      <label>Sarai presente? *</label>
+      <div class="radio-group">
+        <label><input type="radio" name="fi-radio-presenza" value="Sì, ci sarò!" required> Sì, ci sarò!</label>
+        <label><input type="radio" name="fi-radio-presenza" value="Purtroppo non posso"> Purtroppo non posso</label>
+      </div>
+    </div>
+
+    <div id="attendeeDetails" class="hidden">
+      <div class="field">
+        <label for="accompagnatori">Numero di accompagnatori</label>
+        <select id="accompagnatori" name="fi-select-accompagnatori">
+          <option value="Solo io">Solo io</option>
+          <option value="+1">+1 persona</option>
+          <option value="+2">+2 persone</option>
+          <option value="+3">+3 persone</option>
+          <option value="+4 o più">+4 o più persone</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Intolleranze o allergie alimentari</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Celiachia / Senza glutine"> 🌾 Celiachia / Senza glutine</label>
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Intolleranza al lattosio"> 🥛 Intolleranza al lattosio</label>
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Vegetariano"> 🥦 Vegetariano</label>
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Vegano"> 🌱 Vegano</label>
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Allergia frutti di mare"> 🦐 Allergia frutti di mare</label>
+          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Allergia frutta secca"> 🥜 Allergia frutta secca</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="intolleranza_altro">Altre intolleranze o note alimentari</label>
+        <input type="text" id="intolleranza_altro" name="fi-text-intolleranza_altro" placeholder="Es: senza uova, diabetico…">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="messaggio">Un messaggio per gli sposi</label>
+      <textarea id="messaggio" name="fi-text-messaggio" placeholder="Scrivi un pensiero, un augurio…"></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit" id="submitBtn">Conferma la presenza</button>
+
+  </form>
+
+  <div class="form-success" id="formSuccess">
+    <div class="check">✦</div>
+    <h3>Grazie mille!</h3>
+    <p>Abbiamo ricevuto la tua conferma.<br>Non vediamo l'ora di festeggiare con te!</p>
+  </div>
 </section>
+
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
 
 <!-- FOOTER -->
 <footer>
@@ -690,6 +767,56 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── PRESENZA TOGGLE ── */
+  document.querySelectorAll('input[name="fi-radio-presenza"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const extra = document.getElementById('attendeeDetails');
+      extra.classList.toggle('hidden', this.value !== 'Sì, ci sarò!');
+    });
+  });
+
+  /* ── RSVP – Forminit ── */
+  const FORMINIT_FORM_ID = 'r1yust14zjn';
+  const forminit = new Forminit();
+
+  document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const token = await new Promise(resolve => {
+      grecaptcha.ready(() => {
+        grecaptcha.execute('6LcqFxwtAAAAAOTVrc2y6AcYPw9YjgNeunptMR8y', { action: 'submit' }).then(resolve);
+      });
+    });
+    const form = e.target;
+    const btn  = document.getElementById('submitBtn');
+    const errEl = document.getElementById('formError');
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso…';
+
+    const fd = new FormData(form);
+    fd.append('g-recaptcha-response', token);
+
+    if (fd.get('website')) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      return;
+    }
+    fd.delete('website');
+
+    const { error } = await forminit.submit(FORMINIT_FORM_ID, fd);
+
+    if (!error) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      console.error(error);
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Conferma la presenza';
+    }
+  });
 
 </script>
 

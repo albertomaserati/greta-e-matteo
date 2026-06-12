@@ -12,7 +12,7 @@ Pagina web statica per il matrimonio di Greta e Matteo (05/09/2026). Un singolo 
 | Hero | `#hero` | Nomi, data, tagline e countdown live |
 | Programma | `#evento` | Timeline verticale con orari e location |
 | Dove dormire | `#hotel` | Griglia di card hotel con link a Booking/Airbnb |
-| RSVP | `#rsvp` | Form di conferma presenza inviato a Tally |
+| RSVP | `#rsvp` | Form di conferma presenza inviato a Forminit |
 | Footer | — | Nomi, data e email di contatto |
 
 ---
@@ -71,12 +71,12 @@ Radio button e checkbox sono completamente ridisegnati via `appearance: none`:
 - Al check: sfondo gold con marker bianco centrato via `top/left: 50% + translate(-50%, -50%)`
 - Checkbox: checkmark a L ruotato 45°; radio: dot quadrato
 
-### Invio — Tally API
-Il submit è gestito da un `async` event listener che:
-1. Verifica il campo honeypot (vedi sotto); se valorizzato, simula successo senza chiamare Tally
-2. Raccoglie le intolleranze spuntate in un'unica stringa separata da virgole
-3. Invia un `POST` JSON a `https://api.tally.so/r/obzEee`
-4. In caso di risposta `ok`: nasconde il form e mostra `#formSuccess`
+### Invio — Forminit API
+I campi del form usano la naming convention di Forminit (prefisso `fi-<tipo>-<proprietà>`, es. `fi-sender-email`, `fi-radio-presenza`, `fi-checkbox-intolleranze`). Il submit è gestito da un `async` event listener che:
+1. Verifica il campo honeypot (vedi sotto); se valorizzato, simula successo senza chiamare Forminit
+2. Costruisce un `FormData` dal form (le checkbox delle intolleranze, condividendo lo stesso `name`, vengono raccolte automaticamente come elenco)
+3. Invia il `FormData` tramite l'SDK `Forminit` (`forminit.submit(formId, formData)`) caricato da `https://forminit.com/sdk/v1/forminit.js`, verso il form con ID `r1yust14zjn`
+4. In caso di successo: nasconde il form e mostra `#formSuccess`
 5. In caso di errore: mostra `#formError` e riabilita il bottone
 
 ### Anti-bot: honeypot
