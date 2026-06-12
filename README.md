@@ -1,6 +1,12 @@
 # Greta & Matteo — Sito di matrimonio
 
-Pagina web statica per il matrimonio di Greta e Matteo (05/09/2026). Un singolo file HTML autocontenuto: nessun framework, nessuna dipendenza npm, nessun build step.
+Pagina web statica per il matrimonio di Greta e Matteo (05/09/2026). Nessun framework, nessuna dipendenza npm, nessun build step.
+
+| File | Contenuto |
+|---|---|
+| `index.html` | Markup della pagina |
+| `style.css` | Stili |
+| `script.js` | Countdown, scroll reveal, toggle RSVP e submit Forminit |
 
 ---
 
@@ -79,11 +85,12 @@ I campi del form usano la naming convention di Forminit (prefisso `fi-<tipo>-<pr
 4. In caso di successo: nasconde il form e mostra `#formSuccess`
 5. In caso di errore: mostra `#formError` e riabilita il bottone
 
-### Anti-bot: honeypot
-Campo `<input name="website">` posizionato fuori schermo (`left: -9999px`, `opacity: 0`, `pointer-events: none`, `tabindex="-1"`). Gli utenti reali non lo vedono né lo compilano. Se il campo risulta valorizzato al submit, la richiesta a Tally viene soppressa silenziosamente.
+### Anti-bot
+- **Honeypot**: campo `<input name="website">` posizionato fuori schermo (`left: -9999px`, `opacity: 0`, `pointer-events: none`, `tabindex="-1"`). Gli utenti reali non lo vedono né lo compilano. Se il campo risulta valorizzato al submit, la richiesta a Forminit viene soppressa silenziosamente.
+- **reCAPTCHA v3**: prima dell'invio viene generato un token con `grecaptcha.execute` (site key in `script.js`) e allegato al `FormData` come `g-recaptcha-response`.
 
 ---
 
 ## Deploy
 
-Il sito è un singolo `index.html` senza asset esterni locali. È sufficiente hostarlo su qualsiasi CDN statica (GitHub Pages, Netlify, Vercel, ecc.) puntando la root al file.
+Il sito è composto da `index.html`, `style.css` e `script.js`, senza altri asset esterni locali. È sufficiente hostarlo su qualsiasi CDN statica (GitHub Pages, Netlify, Vercel, ecc.) puntando la root alla cartella.
