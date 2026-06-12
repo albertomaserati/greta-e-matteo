@@ -86,8 +86,7 @@ I campi del form usano la naming convention di Forminit (prefisso `fi-<tipo>-<pr
 5. In caso di errore: mostra `#formError` e riabilita il bottone
 
 ### Anti-bot
-- **Honeypot**: campo `<input name="website">` posizionato fuori schermo (`left: -9999px`, `opacity: 0`, `pointer-events: none`, `tabindex="-1"`). Gli utenti reali non lo vedono né lo compilano. Se il campo risulta valorizzato al submit, la richiesta a Forminit viene soppressa silenziosamente.
-- **reCAPTCHA v3**: prima dell'invio viene generato un token con `grecaptcha.execute` (site key in `script.js`) e allegato al `FormData` come `g-recaptcha-response`.
+Il form è protetto da reCAPTCHA v3.
 
 ---
 
