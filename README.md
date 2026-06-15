@@ -53,7 +53,7 @@ Aggiorna ogni secondo i quattro elementi `#cd-days`, `#cd-hours`, `#cd-min`, `#c
 `IntersectionObserver` (threshold 0.12) aggiunge la classe `.visible` agli elementi `.reveal` quando entrano nel viewport, attivando una transizione CSS `opacity` + `translateY`.
 
 ### Toggle campi condizionali
-Le sezioni "Numero di accompagnatori", "Intolleranze" e "Altre note alimentari" sono raggruppate nel div `#attendeeDetails` con `display: contents` (così i figli partecipano direttamente alla grid del form). Quando si seleziona "Purtroppo non posso" viene aggiunta la classe `.hidden` che applica `display: none`; quando si seleziona "Sì, ci sarò!" la classe viene rimossa.
+Le sezioni "Numero di accompagnatori" e "Intolleranze o note alimentari" sono raggruppate nel div `#attendeeDetails` con `display: contents` (così i figli partecipano direttamente alla grid del form). Quando si seleziona "Purtroppo non posso" viene aggiunta la classe `.hidden` che applica `display: none`; quando si seleziona "Sì, ci sarò!" la classe viene rimossa.
 
 ---
 
@@ -67,20 +67,18 @@ Le sezioni "Numero di accompagnatori", "Intolleranze" e "Altre note alimentari" 
 | Email | `email` | Obbligatorio |
 | Sarai presente? | radio | Controlla visibilità `#attendeeDetails` |
 | Numero accompagnatori | `select` | Visibile solo se presente |
-| Intolleranze alimentari | checkbox (×6) | Visibile solo se presente |
-| Altre note alimentari | `text` | Visibile solo se presente |
+| Intolleranze o note alimentari | `text` | Visibile solo se presente; chiede di indicare il numero di ospiti coinvolti |
 | Messaggio per gli sposi | `textarea` | Sempre visibile |
 
 ### Stile controlli custom
-Radio button e checkbox sono completamente ridisegnati via `appearance: none`:
+I radio button sono completamente ridisegnati via `appearance: none`:
 - Riquadro 18×18px, bordo gold, `border-radius: 0`
-- Al check: sfondo gold con marker bianco centrato via `top/left: 50% + translate(-50%, -50%)`
-- Checkbox: checkmark a L ruotato 45°; radio: dot quadrato
+- Al check: sfondo gold con dot quadrato bianco centrato via `top/left: 50% + translate(-50%, -50%)`
 
 ### Invio — Forminit API
-I campi del form usano la naming convention di Forminit (prefisso `fi-<tipo>-<proprietà>`, es. `fi-sender-email`, `fi-radio-presenza`, `fi-checkbox-intolleranze`). Il submit è gestito da un `async` event listener che:
+I campi del form usano la naming convention di Forminit (prefisso `fi-<tipo>-<proprietà>`, es. `fi-sender-email`, `fi-radio-presenza`, `fi-text-intolleranze`). Il submit è gestito da un `async` event listener che:
 1. Verifica il campo honeypot (vedi sotto); se valorizzato, simula successo senza chiamare Forminit
-2. Costruisce un `FormData` dal form (le checkbox delle intolleranze, condividendo lo stesso `name`, vengono raccolte automaticamente come elenco)
+2. Costruisce un `FormData` dal form
 3. Invia il `FormData` tramite l'SDK `Forminit` (`forminit.submit(formId, formData)`) caricato da `https://forminit.com/sdk/v1/forminit.js`, verso il form con ID `r1yust14zjn`
 4. In caso di successo: nasconde il form e mostra `#formSuccess`
 5. In caso di errore: mostra `#formError` e riabilita il bottone

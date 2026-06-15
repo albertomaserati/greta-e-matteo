@@ -75,6 +75,6 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     console.error(error);
     errEl.style.display = 'block';
     btn.disabled = false;
-    btn.textContent = 'Conferma la presenza';
+    btn.textContent = 'Invia';
   }
 });

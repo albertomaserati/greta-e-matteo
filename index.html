@@ -212,20 +212,9 @@
       </div>
 
       <div class="field">
-        <label>Intolleranze o allergie alimentari</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Celiachia / Senza glutine"> 🌾 Celiachia / Senza glutine</label>
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Intolleranza al lattosio"> 🥛 Intolleranza al lattosio</label>
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Vegetariano"> 🥦 Vegetariano</label>
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Vegano"> 🌱 Vegano</label>
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Allergia frutti di mare"> 🦐 Allergia frutti di mare</label>
-          <label><input type="checkbox" name="fi-checkbox-intolleranze" value="Allergia frutta secca"> 🥜 Allergia frutta secca</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="intolleranza_altro">Altre intolleranze o note alimentari</label>
-        <input type="text" id="intolleranza_altro" name="fi-text-intolleranza_altro" placeholder="Es: senza uova, diabetico…">
+        <label for="intolleranza_altro">Intolleranze o note alimentari</label>
+        <p class="field-hint">Indica quanti ospiti e quali intolleranze/allergie, es: "2 persone senza glutine, 1 vegetariana"</p>
+        <input type="text" id="intolleranza_altro" name="fi-text-intolleranze" placeholder="Es: 2 persone senza glutine, 1 vegetariana…">
       </div>
     </div>
 
@@ -234,7 +223,7 @@
       <textarea id="messaggio" name="fi-text-messaggio" placeholder="Scrivi un pensiero, un augurio…"></textarea>
     </div>
 
-    <button type="submit" class="btn-submit" id="submitBtn">Conferma la presenza</button>
+    <button type="submit" class="btn-submit" id="submitBtn">Invia</button>
 
   </form>
 

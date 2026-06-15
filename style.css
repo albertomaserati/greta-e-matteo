@@ -292,6 +292,13 @@ section {
   text-transform: uppercase;
   color: var(--ink-lt);
 }
+.field-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--ink-lt);
+  margin-top: -.3rem;
+}
 .field input,
 .field select,
 .field textarea {
@@ -324,11 +331,10 @@ section {
   padding-right: 2.5rem;
 }
 
-.radio-group, .checkbox-group {
+.radio-group {
   display: flex; flex-direction: column; gap: .6rem;
 }
-.radio-group label,
-.checkbox-group label {
+.radio-group label {
   display: flex; align-items: center; gap: .7rem;
   font-size: .88rem;
   letter-spacing: 0;
@@ -336,8 +342,7 @@ section {
   color: var(--ink);
   cursor: pointer;
 }
-.radio-group input[type=radio],
-.checkbox-group input[type=checkbox] {
+.radio-group input[type=radio] {
   -webkit-appearance: none;
   appearance: none;
   width: 18px; height: 18px;
@@ -349,19 +354,9 @@ section {
   transition: border-color .2s, background .2s;
   position: relative;
 }
-.radio-group input[type=radio]:checked,
-.checkbox-group input[type=checkbox]:checked {
+.radio-group input[type=radio]:checked {
   background: var(--gold);
   border-color: var(--gold);
-}
-.checkbox-group input[type=checkbox]:checked::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 5px; height: 9px;
-  border: 2px solid var(--ivory);
-  border-top: none; border-left: none;
-  transform: translate(-50%, -58%) rotate(45deg);
 }
 .radio-group input[type=radio]:checked::after {
   content: '';
