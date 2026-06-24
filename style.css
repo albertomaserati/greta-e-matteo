@@ -62,8 +62,8 @@ nav a:hover { color: var(--gold); }
   text-align: center;
   padding: 8rem 2rem 4rem;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(184,151,90,.12) 0%, transparent 70%),
-    var(--ivory);
+    linear-gradient(to bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.45) 100%),
+    url('assets/herobackground.jpg') center/cover no-repeat;
   position: relative;
 }
 
@@ -71,7 +71,7 @@ nav a:hover { color: var(--gold); }
   font-size: .7rem;
   letter-spacing: .35em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-lt);
   margin-bottom: 1.5rem;
   animation: fadeUp .8s ease both;
 }
@@ -81,12 +81,12 @@ nav a:hover { color: var(--gold); }
   font-size: clamp(4rem, 10vw, 8rem);
   font-weight: 300;
   line-height: 1;
-  color: var(--ink);
+  color: #fff;
   animation: fadeUp .9s .1s ease both;
 }
 .hero-names .amp {
   font-style: italic;
-  color: var(--gold);
+  color: var(--gold-lt);
   font-size: .65em;
   display: inline-block;
   margin: 0 .15em;
@@ -96,14 +96,14 @@ nav a:hover { color: var(--gold); }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  color: var(--ink-lt);
+  color: rgba(255,255,255,.75);
   margin-top: 1.4rem;
   animation: fadeUp .9s .2s ease both;
 }
 
 .hero-divider {
   width: 120px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
   margin: 2rem auto;
   animation: fadeUp .9s .3s ease both;
 }
@@ -112,7 +112,7 @@ nav a:hover { color: var(--gold); }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 1.15rem;
-  color: var(--ink-lt);
+  color: rgba(255,255,255,.75);
   max-width: 420px;
   animation: fadeUp .9s .4s ease both;
 }
@@ -127,14 +127,14 @@ nav a:hover { color: var(--gold); }
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.8rem;
   font-weight: 300;
-  color: var(--gold-dk);
+  color: var(--gold-lt);
   line-height: 1;
 }
 .countdown-unit .lbl {
   font-size: .62rem;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--ink-lt);
+  color: rgba(255,255,255,.6);
   margin-top: .3rem;
 }
 
