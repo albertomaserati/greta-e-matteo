@@ -260,6 +260,98 @@ section {
 }
 .hotel-link:hover { color: var(--gold-dk); border-color: var(--gold-dk); }
 
+/* ── VIAGGIO ── */
+#viaggio {
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.38) 50%, rgba(0,0,0,.60) 100%),
+    url('assets/peritomoreno.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+.viaggio-inner {
+  text-align: center;
+  padding: 6rem 2rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+#viaggio .section-label {
+  color: var(--gold-lt);
+  opacity: 0;
+}
+#viaggio .section-label.visible { opacity: 1; }
+
+.viaggio-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.viaggio-divider {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+  margin: 1.8rem auto;
+}
+
+.viaggio-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  color: rgba(255,255,255,.88);
+  line-height: 1.8;
+  margin-bottom: 2.8rem;
+}
+
+.viaggio-iban {
+  display: inline-flex;
+  flex-direction: column;
+  gap: .8rem;
+  border: 1px solid rgba(212,185,122,.4);
+  padding: 1.6rem 2.4rem;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+
+.iban-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  text-align: left;
+}
+
+.iban-label {
+  font-size: .6rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.iban-value {
+  font-family: 'Jost', sans-serif;
+  font-size: .92rem;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.9);
+}
+
+@media (max-width: 560px) {
+  #viaggio { background-attachment: scroll; }
+  .viaggio-iban { padding: 1.2rem 1.4rem; }
+  .iban-row { flex-direction: column; gap: .2rem; }
+  .iban-label { min-width: unset; }
+}
+
 /* ── RSVP ── */
 #rsvp { background: var(--cream); max-width: 100%; }
 #rsvp > * { max-width: 680px; margin-left: auto; margin-right: auto; }
