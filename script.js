@@ -78,3 +78,34 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     btn.textContent = 'Invia';
   }
 });
+
+/* ── NAV: MOBILE MENU ── */
+const navToggle  = document.getElementById('navToggle');
+const navOverlay = document.getElementById('navOverlay');
+
+function openNav() {
+  document.body.classList.add('nav-open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  navToggle.setAttribute('aria-label', 'Chiudi il menu');
+}
+function closeNav() {
+  document.body.classList.remove('nav-open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-label', 'Apri il menu');
+}
+
+navToggle.addEventListener('click', () => {
+  document.body.classList.contains('nav-open') ? closeNav() : openNav();
+});
+
+navOverlay.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeNav);
+});
+
+navOverlay.addEventListener('click', (e) => {
+  if (e.target === navOverlay) closeNav();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('nav-open')) closeNav();
+});
