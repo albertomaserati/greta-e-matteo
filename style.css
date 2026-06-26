@@ -155,9 +155,16 @@ body.nav-open { overflow: hidden; }
   text-align: center;
   padding: 8rem 2rem 4rem;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.35) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.45) 100%),
-    url('assets/herobackground.jpg') center/cover no-repeat;
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.4) 45%, rgba(0,0,0,.62) 100%),
+    url('assets/herobackground2.jpg') center 20% / cover no-repeat;
   position: relative;
+}
+
+@media (max-width: 700px) {
+  #hero {
+    background-size: auto 122%;
+    background-position: 64% 0%;
+  }
 }
 
 .hero-eyebrow {
@@ -166,6 +173,7 @@ body.nav-open { overflow: hidden; }
   text-transform: uppercase;
   color: var(--gold-lt);
   margin-bottom: 1.5rem;
+  text-shadow: 0 2px 14px rgba(0,0,0,.55);
   animation: fadeUp .8s ease both;
 }
 
@@ -175,6 +183,7 @@ body.nav-open { overflow: hidden; }
   font-weight: 300;
   line-height: 1;
   color: #fff;
+  text-shadow: 0 4px 24px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.4);
   animation: fadeUp .9s .1s ease both;
 }
 .hero-names .amp {
@@ -189,7 +198,8 @@ body.nav-open { overflow: hidden; }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  color: rgba(255,255,255,.75);
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
   margin-top: 1.4rem;
   animation: fadeUp .9s .2s ease both;
 }
@@ -205,7 +215,8 @@ body.nav-open { overflow: hidden; }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 1.15rem;
-  color: rgba(255,255,255,.75);
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
   max-width: 420px;
   animation: fadeUp .9s .4s ease both;
 }
@@ -221,13 +232,15 @@ body.nav-open { overflow: hidden; }
   font-size: 2.8rem;
   font-weight: 300;
   color: var(--gold-lt);
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
   line-height: 1;
 }
 .countdown-unit .lbl {
   font-size: .62rem;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.6);
+  color: rgba(255,255,255,.85);
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
   margin-top: .3rem;
 }
 
