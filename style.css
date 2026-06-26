@@ -558,7 +558,7 @@ section {
   position: relative;
 }
 .radio-group input[type=radio]:checked {
-  background: var(--gold);
+  background: var(--ivory);
   border-color: var(--gold);
 }
 .radio-group input[type=radio]:checked::after {
@@ -566,7 +566,7 @@ section {
   position: absolute;
   top: 50%; left: 50%;
   width: 8px; height: 8px;
-  background: var(--ivory);
+  background: var(--gold);
   transform: translate(-50%, -50%);
 }
 
