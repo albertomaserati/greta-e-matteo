@@ -365,6 +365,24 @@ section {
   transition: color .2s, border-color .2s;
 }
 .hotel-link:hover { color: var(--gold-dk); border-color: var(--gold-dk); }
+.hotel-hidden { display: none; }
+.hotel-more-wrap { text-align: center; margin-top: 2.5rem; }
+.btn-outline {
+  display: inline-block;
+  padding: .9rem 2.5rem;
+  background: transparent;
+  color: var(--gold-dk);
+  border: 1px solid var(--gold);
+  border-radius: 0;
+  font-family: 'Jost', sans-serif;
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s, color .25s, transform .15s;
+}
+.btn-outline:hover { background: var(--gold); color: var(--ivory); transform: translateY(-1px); }
 
 /* ── VIAGGIO ── */
 #viaggio {

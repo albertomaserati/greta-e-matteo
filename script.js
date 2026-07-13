@@ -79,6 +79,23 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   }
 });
 
+/* ── HOTEL: CARICA ALTRO ── */
+const hotelToggleBtn = document.getElementById('hotelToggleBtn');
+if (hotelToggleBtn) {
+  const hiddenHotels = document.querySelectorAll('.hotel-extra');
+  hotelToggleBtn.addEventListener('click', () => {
+    const expand = hotelToggleBtn.textContent.trim() === 'Carica altro';
+    hiddenHotels.forEach(card => {
+      card.classList.toggle('hotel-hidden', !expand);
+      if (expand) card.classList.add('visible');
+    });
+    hotelToggleBtn.textContent = expand ? 'Mostra meno' : 'Carica altro';
+    if (!expand) {
+      document.getElementById('hotel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
 /* ── NAV: MOBILE MENU ── */
 const navToggle  = document.getElementById('navToggle');
 const navOverlay = document.getElementById('navOverlay');
